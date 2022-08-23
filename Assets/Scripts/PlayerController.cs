@@ -9,6 +9,9 @@ public class PlayerController : MonoBehaviour
 
     [Header("Boundaries")]
     public float maxDistance;
+
+    [Header("Dependencies")]
+    public GameObject projectilePrefab;
     
     // Input
     private float _rawInput;
@@ -19,6 +22,7 @@ public class PlayerController : MonoBehaviour
     
     private PlayerInput _playerInput;
     private InputAction _moveAction;
+    private InputAction _shootAction;
 
     private void Awake()
     {
@@ -27,10 +31,14 @@ public class PlayerController : MonoBehaviour
         
         _playerInput = GetComponent<PlayerInput>();
         _moveAction = _playerInput.actions["Move"];
+        _shootAction = _playerInput.actions["Shoot"];
     }
 
     private void Update()
     {
+        if (_shootAction.WasPressedThisFrame())
+            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        
         _rawInput = _moveAction.ReadValue<float>();
         _smoothInput = Mathf.SmoothDamp(_smoothInput, _rawInput, ref _inputVelocity, smoothTime);
 
