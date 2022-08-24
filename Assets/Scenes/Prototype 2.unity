@@ -502,8 +502,8 @@ MonoBehaviour:
   - {fileID: 806160976193418732, guid: afd18438f0f2645459cfb1711a810302, type: 3}
   spawnRangeX: 17
   spawnPosZ: 25
-  allowSpawn: 1
-  timeBetweenSpawns: 2000
+  spawnDelay: 1
+  spawnInterval: 2
 --- !u!4 &801347286
 Transform:
   m_ObjectHideFlags: 0

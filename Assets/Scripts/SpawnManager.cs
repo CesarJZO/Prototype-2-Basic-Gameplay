@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using UnityEngine;
 
 public class SpawnManager : MonoBehaviour
@@ -8,25 +7,19 @@ public class SpawnManager : MonoBehaviour
     public float spawnRangeX;
     public float spawnPosZ;
 
-    public bool allowSpawn;
-    
-    [Tooltip("Time in milliseconds"), Min(500)] public int timeBetweenSpawns;
-    
+    public float spawnDelay;
+    public float spawnInterval;
+
     private void Start()
     {
-        Spawn();
+        InvokeRepeating(nameof(SpawnRandomAnimal), spawnDelay, spawnInterval);
     }
 
-    private async void Spawn()
+    private void SpawnRandomAnimal()
     {
-        while (allowSpawn && Application.isPlaying)
-        {
-            var i = Random.Range(0, animalPrefabs.Length);
-            var spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
-            Instantiate(animalPrefabs[i], spawnPos, animalPrefabs[i].transform.rotation);
-            // await Task.Yield(); // Almost the same as yield return null. This is not frame-perfect
-            await Task.Delay(timeBetweenSpawns);
-        }
+        var i = Random.Range(0, animalPrefabs.Length);
+        var spawnPos = new Vector3(Random.Range(-spawnRangeX, spawnRangeX), 0, spawnPosZ);
+        Instantiate(animalPrefabs[i], spawnPos, animalPrefabs[i].transform.rotation);
     }
 
     private void OnDrawGizmosSelected()

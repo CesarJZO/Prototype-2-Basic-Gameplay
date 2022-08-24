@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 187016, guid: c35f3b540532d1747b95a8a2eea9991d, type: 3}
       propertyPath: m_Name
-      value: Dog_Pug_01
+      value: Dog
       objectReference: {fileID: 0}
     - target: {fileID: 495668, guid: c35f3b540532d1747b95a8a2eea9991d, type: 3}
       propertyPath: m_RootOrder
@@ -78,6 +78,19 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 187016, guid: c35f3b540532d1747b95a8a2eea9991d, type: 3}
   m_PrefabInstance: {fileID: 806160976193302372}
   m_PrefabAsset: {fileID: 0}
+--- !u!65 &6777648230182132732
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 806160976193418732}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1, y: 0.2, z: 0.25}
+  m_Center: {x: 0, y: 0.1, z: 0.032}
 --- !u!114 &769765921
 MonoBehaviour:
   m_ObjectHideFlags: 0
