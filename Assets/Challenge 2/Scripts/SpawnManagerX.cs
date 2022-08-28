@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using UnityEngine;
 
 public class SpawnManagerX : MonoBehaviour
@@ -8,10 +7,7 @@ public class SpawnManagerX : MonoBehaviour
 
     private float _spawnLimitXLeft = 10f;
     private float _spawnLimitXRight = 12f;
-    private float _spawnPosY = 0;
-
-    private float _startDelay = 1.0f;
-    private float _spawnInterval = 2f;
+    private float _spawnPosY = 5f;
 
     private void Start()
     {
