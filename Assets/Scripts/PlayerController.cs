@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -8,15 +9,20 @@ public class PlayerController : MonoBehaviour
     public float smoothTime;
 
     [Header("Boundaries")]
-    public float maxDistance;
+    public float maxHorizontalDistance;
+    public float maxVerticalDistance;
 
     [Header("Dependencies")]
     public GameObject projectilePrefab;
-    
+    public Transform shootPos;
+
+    public UnityEvent onDie;
+    private bool _dead;
+
     // Input
-    private float _rawInput;
-    private float _smoothInput;
-    private float _inputVelocity;
+    private Vector2 _rawInput;
+    private Vector2 _smoothInput;
+    private Vector2 _inputVelocity;
 
     private Vector3 _clampedPos;
     
@@ -26,9 +32,9 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        var position = transform.position;
-        _clampedPos = new Vector3(0, position.y, position.z);
-        
+        _dead = false;
+        _clampedPos = transform.position;
+
         _playerInput = GetComponent<PlayerInput>();
         _moveAction = _playerInput.actions["Move"];
         _shootAction = _playerInput.actions["Shoot"];
@@ -36,21 +42,34 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (_shootAction.WasPressedThisFrame())
-            Instantiate(projectilePrefab, transform.position, projectilePrefab.transform.rotation);
+        if (_dead) return;
         
-        _rawInput = _moveAction.ReadValue<float>();
-        _smoothInput = Mathf.SmoothDamp(_smoothInput, _rawInput, ref _inputVelocity, smoothTime);
-
+        if (_shootAction.WasPressedThisFrame())
+            Instantiate(projectilePrefab, shootPos.position, projectilePrefab.transform.rotation);
+        
+        _rawInput = _moveAction.ReadValue<Vector2>();
+        _smoothInput = Vector2.SmoothDamp(_smoothInput, _rawInput, ref _inputVelocity, smoothTime);
+        
         var t = transform;
-        t.Translate(Vector3.right * (_smoothInput * speed * Time.deltaTime));
+        var direction = new Vector3(_smoothInput.x, 0, _smoothInput.y);
+        t.Translate(direction * (speed * Time.deltaTime));
 
-        _clampedPos.x = Mathf.Clamp(t.position.x, -maxDistance, maxDistance);
+        var p = t.position;
+        _clampedPos.x = Mathf.Clamp(p.x, -maxHorizontalDistance, maxHorizontalDistance);
+        _clampedPos.z = Mathf.Clamp(p.z, -maxVerticalDistance, maxVerticalDistance);
+        
         transform.position = _clampedPos;
     }
 
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(maxDistance * 2f, 0f, 5f));
+        Gizmos.DrawWireCube(Vector3.zero, new Vector3(maxHorizontalDistance * 2f, 0f, maxVerticalDistance * 2f));
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Projectile")) return;
+        _dead = true;
+        onDie?.Invoke();
     }
 }

@@ -424,8 +424,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 15
   smoothTime: 0.1
-  maxDistance: 18
+  maxHorizontalDistance: 0
+  maxVerticalDistance: 0
   projectilePrefab: {fileID: 2271235470381320934, guid: fffe32c80de60514c94c4aa1ece745f7, type: 3}
+  shootPos: {fileID: 0}
+  onDie:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1162727535
 MonoBehaviour:
   m_ObjectHideFlags: 0
