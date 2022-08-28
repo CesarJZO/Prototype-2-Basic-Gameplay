@@ -5,9 +5,9 @@ public class SpawnManagerX : MonoBehaviour
 {
     public GameObject[] ballPrefabs;
 
-    private float _spawnLimitXLeft = 10f;
-    private float _spawnLimitXRight = 12f;
-    private float _spawnPosY = 5f;
+    private const float SpawnLimitXLeft = 10f;
+    private const float SpawnLimitXRight = 12f;
+    private const float SpawnPosY = 0;
 
     private void Start()
     {
@@ -18,7 +18,7 @@ public class SpawnManagerX : MonoBehaviour
     {
         while (Application.isPlaying)
         {
-            var spawnPos = new Vector3(Random.Range(_spawnLimitXLeft, _spawnLimitXRight), _spawnPosY, 0);
+            var spawnPos = new Vector3(Random.Range(SpawnLimitXLeft, SpawnLimitXRight), SpawnPosY, 0);
             var i = Random.Range(0, ballPrefabs.Length);
             Instantiate(ballPrefabs[i], spawnPos, ballPrefabs[i].transform.rotation);
 

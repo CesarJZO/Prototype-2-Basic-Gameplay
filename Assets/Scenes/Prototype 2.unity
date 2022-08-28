@@ -1064,6 +1064,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9027464532789488517, guid: 6c5850a994a49bb4e833a5877e3b916a, type: 3}
+      propertyPath: shootRate
+      value: 0.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 9027464532789488517, guid: 6c5850a994a49bb4e833a5877e3b916a, type: 3}
       propertyPath: onDie.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

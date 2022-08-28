@@ -7,7 +7,11 @@ public class PlayerController : MonoBehaviour
     [Header("Settings")]
     public float speed;
     public float smoothTime;
-
+    public float shootRate;
+    
+    private float _initialShootTime;
+    private float _totalShootTime;
+    
     [Header("Boundaries")]
     public float maxHorizontalDistance;
     public float maxVerticalDistance;
@@ -43,10 +47,14 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         if (_dead) return;
-        
-        if (_shootAction.WasPressedThisFrame())
+
+        if (_shootAction.WasPressedThisFrame() && Time.time > _totalShootTime)
+        {
+            _initialShootTime = Time.time;
+            _totalShootTime = _initialShootTime + shootRate;
             Instantiate(projectilePrefab, shootPos.position, projectilePrefab.transform.rotation);
-        
+        }
+
         _rawInput = _moveAction.ReadValue<Vector2>();
         _smoothInput = Vector2.SmoothDamp(_smoothInput, _rawInput, ref _inputVelocity, smoothTime);
         

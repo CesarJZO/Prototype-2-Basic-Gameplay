@@ -12,9 +12,11 @@ public class PlayerControllerX : MonoBehaviour
     void Update()
     {
         // On space bar press, send dog
-        if (!(Time.time > _totalTime) || !Keyboard.current.spaceKey.wasPressedThisFrame) return;
-        _initialTime = Time.time;
-        _totalTime = _initialTime + delay;
-        Instantiate(dogPrefab, transform.position, dogPrefab.transform.rotation);
+        if (Time.time > _totalTime && Keyboard.current.spaceKey.wasPressedThisFrame)
+        {
+            _initialTime = Time.time;
+            _totalTime = _initialTime + delay;
+            Instantiate(dogPrefab, transform.position, dogPrefab.transform.rotation);
+        }
     }
 }
