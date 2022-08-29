@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -19,9 +18,7 @@ public class PlayerController : MonoBehaviour
     [Header("Dependencies")]
     public GameObject projectilePrefab;
     public Transform shootPos;
-
-    public UnityEvent onDie;
-    private bool _dead;
+    private GameManager _gameManager;
 
     // Input
     private Vector2 _rawInput;
@@ -36,7 +33,6 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        _dead = false;
         _clampedPos = transform.position;
 
         _playerInput = GetComponent<PlayerInput>();
@@ -44,9 +40,14 @@ public class PlayerController : MonoBehaviour
         _shootAction = _playerInput.actions["Shoot"];
     }
 
+    private void Start()
+    {
+        _gameManager = GameManager.instance;
+    }
+
     private void Update()
     {
-        if (_dead) return;
+        if (_gameManager.lives <= 0) return;
 
         if (_shootAction.WasPressedThisFrame() && Time.time > _totalShootTime)
         {
@@ -72,12 +73,5 @@ public class PlayerController : MonoBehaviour
     private void OnDrawGizmos()
     {
         Gizmos.DrawWireCube(Vector3.zero, new Vector3(maxHorizontalDistance * 2f, 0f, maxVerticalDistance * 2f));
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Projectile")) return;
-        _dead = true;
-        onDie?.Invoke();
     }
 }

@@ -38,6 +38,7 @@ public class SpawnManager : MonoBehaviour
                 rotation = 270f;
                 break;
         }
+
         var i = Random.Range(0, animalPrefabs.Length);
         Instantiate(animalPrefabs[i], spawnPos, Quaternion.Euler(0, rotation, 0));
 

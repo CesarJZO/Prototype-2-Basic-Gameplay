@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Dog
   - Projectile
+  - Animal
   layers:
   - Default
   - TransparentFX
